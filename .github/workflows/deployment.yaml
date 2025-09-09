@@ -1,40 +1,22 @@
-name: Run tests
-on: push
+name: events demo
+on:
+  pull_request:
+    types:
+      - opened
+  workflow_dispatch:
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: outputs events data
+        run: echo "${{toJSON()}}"
       - name: Get Code
-        uses: actions/checkout@v3
-
-      - name: install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
+        run: actions/checkout@v3
       - name: install dependencies
         run: npm ci
-
-      - name: run tests
+      - name: test Code
         run: npm test
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Code
-        uses: actions/checkout@v3
-
-      - name: install  Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: install  dependencies
-        run: npm install
-
-      - name: build the project
+      - name: build Code
         run: npm run build
-
-      - name: deploy the app
-        run: echo "deploying ...."
+      - name: deploy Code
+        run: echo "deploying ..."
