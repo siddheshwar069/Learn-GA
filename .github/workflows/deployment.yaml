@@ -29,6 +29,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: insatll dependencies
+        run: npm insatll
+
       - name: build the project
         run: npm run build
 
